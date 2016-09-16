@@ -14,8 +14,8 @@ function AlbumsIndexController ($http) {
   var vm = this;
   vm.newAlbum = {};
   vm.newAlbum = {
-    name: 'Viva Hate',
-    artistName: 'Morrissey'
+    // name: 'Viva Hate',
+    // artistName: 'Morrissey'
   };
 
   $http({
@@ -26,6 +26,19 @@ function AlbumsIndexController ($http) {
   }, function errorCallback(response) {
     console.log('There was an error getting the data', response);
   });
+
+  vm.deleteAlbum = function (album) {
+  $http({
+    method: 'DELETE',
+    url: '/api/albums/'+ album._id
+  }).then(function successCallback(res) {
+    var index = vm.albums.indexOf(album);
+    vm.albums.splice(index, 1);
+    console.log(album);
+  }, function errorCallback(response) {
+    console.log('There was an error deleting the data', response);
+  });
+}
 
   vm.createAlbum = function () {
     $http({
